@@ -9,13 +9,19 @@ package net.bracode.jplay.spaceInvaders;
 
 import jplay.Sprite;
 
-public class Bullet extends Sprite{
+public class Bullet extends Sprite {
 
 	public Bullet(String fileName) {
 		super(fileName);
 		// TODO Auto-generated constructor stub
 	}
-	
 
+	public void moveToUp(double x, double y, double vel) {
+		this.y -= vel;
+	}
+
+	public void setPosition(double x) {
+		this.x = x;
+	}
 
 }

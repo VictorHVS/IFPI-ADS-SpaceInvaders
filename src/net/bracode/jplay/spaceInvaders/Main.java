@@ -10,7 +10,7 @@ package net.bracode.jplay.spaceInvaders;
 public class Main {
 
 	public static void main(String[] args) {
-		
+		//Chama o construtor da classe Game
 		new Game();
 	}
 }

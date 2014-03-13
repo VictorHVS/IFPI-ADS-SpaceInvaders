@@ -7,7 +7,10 @@
  */
 package net.bracode.jplay.spaceInvaders;
 
+import java.awt.Color;
+
 import jplay.GameImage;
+import jplay.Keyboard;
 import jplay.Window;
 
 public class Game {
@@ -16,10 +19,16 @@ public class Game {
 	Window 		window;
 	GameImage 	background;
 	Nave		nave;
-
-	public Game() { // Este eh o construtor da classe
-		init();
-		loop();
+	Invader		invader;
+	Keyboard	keyboard;
+	GameImage[]	lifeNave;
+	GameImage	close;
+	
+	int			score;
+	int			life;
+	public Game() {
+		init(); //Uso para fazer o papel de construtor
+		loop(); //Contem o loop do game
 	}
 
 	/*
@@ -30,14 +39,37 @@ public class Game {
 		window 		= new Window(800, 600);
 		background 	= new GameImage("resource/image/background.png");
 		nave		= new Nave("resource/image/nave.png");
-		nave.x		= background.width/2 - nave.x/2;
+		nave.x		= background.width/2 - nave.width/2;
 		nave.y		= background.height- nave.height;
+		invader		= new Invader("resource/image/invader.png");
+		invader.x	= background.width/2 - invader.width/2;
+		invader.y	= 80;
+		keyboard	= window.getKeyboard();
+		life		= 3;
+		score		= 0;
+		lifeNave	= new GameImage[3];
+		
+		for(int i = 0; i < 3; i++){
+			lifeNave[i]		= new GameImage("resource/image/life.png");
+			lifeNave[i].x	= 507 + i * (lifeNave[i].width + 2);
+			lifeNave[i].y	= 53;
+		}
+		
+		close		= new GameImage("resource/image/close.png");
+		close.x		= background.width - close.width;
+		close.y		= 0;
 	}
 
 	// Metodo responsavel por desenhar em tela todos os elementos.
 	public void draw() {
 		background.draw();
 		nave.draw();
+		invader.draw();
+		for(GameImage life : lifeNave){
+			life.draw();
+		}
+		window.drawText(""+score, 300, 70, Color.WHITE);
+		close.draw();
 	}
 
 	/*
@@ -49,8 +81,19 @@ public class Game {
 		while (true) {
 			draw(); //Metodo encarregado de possuir todos os draws
 			
+			//Move a nave no eixo X
+			nave.moveX(1);
 			
-			window.update(); //atualiza a janela
+			//move o invasor
+			invader.moverX(1);
+			
+			//ESC fecha a janela
+			if(keyboard.keyDown(keyboard.ESCAPE_KEY)){
+				window.exit();
+			}
+			
+			//atualiza a janela
+			window.update(); 
 		}
 	}
 }

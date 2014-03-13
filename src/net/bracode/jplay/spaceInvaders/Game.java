@@ -8,7 +8,6 @@
 package net.bracode.jplay.spaceInvaders;
 
 import jplay.GameImage;
-import jplay.Sprite;
 import jplay.Window;
 
 public class Game {
